@@ -38,4 +38,15 @@ export class SignUpDto {
   )
   @Length(8, 50, { message: 'Password must be between 8 and 50 characters' })
   password: string;
+
+  @ApiProperty({
+    description: 'The WhatsApp number of the user',
+    required: true,
+    example: '+201234567890',
+  })
+  @IsString()
+  @Matches(/^\+?[1-9]\d{1,14}$/, {
+    message: 'WhatsApp number must be a valid phone number',
+  })
+  whatsapp_number: string;
 }

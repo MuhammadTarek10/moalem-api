@@ -31,6 +31,7 @@ describe('Auth (e2e)', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
       password: 'Test@123',
+      whatsapp_number: '+201234567890',
     };
 
     it('should sign up a new user successfully', () => {
@@ -186,6 +187,7 @@ describe('Auth (e2e)', () => {
       name: 'Jane Smith',
       email: 'jane.smith@example.com',
       password: 'Test@456',
+      whatsapp_number: '+201234567891',
     };
 
     beforeEach(async () => {
@@ -306,6 +308,7 @@ describe('Auth (e2e)', () => {
       name: 'Charlie Brown',
       email: 'charlie.brown@example.com',
       password: 'Test@111',
+      whatsapp_number: '+201234567892',
     };
 
     beforeEach(async () => {
@@ -547,6 +550,7 @@ describe('Auth (e2e)', () => {
       name: 'Bob Johnson',
       email: 'bob.johnson@example.com',
       password: 'Test@789',
+      whatsapp_number: '+201234567893',
     };
 
     beforeEach(async () => {
@@ -628,6 +632,7 @@ describe('Auth (e2e)', () => {
       name: 'Alice Williams',
       email: 'alice.williams@example.com',
       password: 'Test@999',
+      whatsapp_number: '+201234567894',
     };
 
     it('should complete full authentication flow: sign-up -> sign-in -> sign-out', async () => {
@@ -790,6 +795,7 @@ describe('Auth (e2e)', () => {
           name: 'Test User',
           email: "test@example.com' OR '1'='1",
           password: 'Test@123',
+          whatsapp_number: '+201234567897',
         })
         .expectStatus(HttpStatus.BAD_REQUEST);
     });
@@ -799,6 +805,7 @@ describe('Auth (e2e)', () => {
         name: '<script>alert("xss")</script>',
         email: 'xss@example.com',
         password: 'Test@123',
+        whatsapp_number: '+201234567895',
       };
 
       return pactum
@@ -813,6 +820,7 @@ describe('Auth (e2e)', () => {
         name: 'Test User',
         email: '  test@example.com  ',
         password: 'Test@123',
+        whatsapp_number: '+201234567896',
       };
 
       await pactum
