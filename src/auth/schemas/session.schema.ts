@@ -25,6 +25,9 @@ export class Session extends CommonSchema {
   userAgent?: string;
 
   @Prop({ required: false })
+  revokedAt: Date;
+
+  @Prop({ required: false })
   ip?: string;
 }
 

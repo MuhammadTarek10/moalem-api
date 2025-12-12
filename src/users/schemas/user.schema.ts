@@ -15,6 +15,24 @@ export class User extends CommonSchema {
 
   @Prop({ type: [AuthMethodSchema], required: true, select: false })
   authMethods: AuthMethod[];
+
+  @Prop({ required: true, unique: true })
+  whatsapp_number: string;
+
+  @Prop({ required: false })
+  governorate: string;
+
+  @Prop({ required: false })
+  education_adminstration: string;
+
+  @Prop({ required: false })
+  subjects: string[];
+
+  @Prop({ required: false })
+  schools: string[];
+
+  @Prop({ required: false })
+  grades: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
