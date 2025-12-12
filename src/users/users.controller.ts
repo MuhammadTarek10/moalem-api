@@ -13,10 +13,10 @@ import {
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { JwtGuard } from 'src/auth/guards/jwt.guard';
-import { ResponseDto } from 'src/core/common/dtos/response.dto';
-import { GetUser } from 'src/core/decorators/get-user.decorator';
-import { ResponseMessage } from 'src/core/decorators/response-message.decorator';
+import { JwtGuard } from '../auth/guards/jwt.guard';
+import { ResponseDto } from '../core/common/dtos/response.dto';
+import { GetUser } from '../core/decorators/get-user.decorator';
+import { ResponseMessage } from '../core/decorators/response-message.decorator';
 import { UserResponseDto } from './dtos/responses.dto';
 import { User } from './schemas/user.schema';
 

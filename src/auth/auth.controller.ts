@@ -20,16 +20,16 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 import type { Response } from 'express';
-import { ResponseDto } from 'src/core/common/dtos/response.dto';
-import { GetUser } from 'src/core/decorators/get-user.decorator';
-import { ResponseMessage } from 'src/core/decorators/response-message.decorator';
-import { CookieService } from 'src/core/utils/cookie/cookie.service';
-import { TokenService } from 'src/core/utils/token/token.service';
+import { ResponseDto } from '../core/common/dtos/response.dto';
+import { GetUser } from '../core/decorators/get-user.decorator';
+import { ResponseMessage } from '../core/decorators/response-message.decorator';
+import { CookieService } from '../core/utils/cookie/cookie.service';
+import { TokenService } from '../core/utils/token/token.service';
 import type {
   RefreshTokenPayload,
   UserWithSession,
-} from 'src/core/utils/token/types';
-import { User } from 'src/users/schemas/user.schema';
+} from '../core/utils/token/types';
+import { User } from '../users/schemas/user.schema';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dtos/sign-in.dto';
 import { SignUpDto } from './dtos/sign-up.dto';

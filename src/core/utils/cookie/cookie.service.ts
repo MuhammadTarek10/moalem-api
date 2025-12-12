@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
-import { Environment } from 'src/core/config/environment';
+import { Environment } from '../../config/environment';
 
 @Injectable()
 export class CookieService {

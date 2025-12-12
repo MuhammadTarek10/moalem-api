@@ -3,15 +3,15 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { HashService } from 'src/core/utils/hash.service';
-import { TokenService } from 'src/core/utils/token/token.service';
+import { HashService } from '../core/utils/hash.service';
+import { TokenService } from '../core/utils/token/token.service';
 import {
   RefreshTokenPayload,
   TokenResponse,
   UserWithSession,
-} from 'src/core/utils/token/types';
-import { User } from 'src/users/schemas/user.schema';
-import { UsersService } from 'src/users/users.service';
+} from '../core/utils/token/types';
+import { User } from '../users/schemas/user.schema';
+import { UsersService } from '../users/users.service';
 import { SignUpDto } from './dtos/sign-up.dto';
 import { SessionRepository } from './session.repository';
 
@@ -22,7 +22,7 @@ export class AuthService {
     private readonly sessionRepository: SessionRepository,
     private readonly tokenService: TokenService,
     private readonly hashService: HashService,
-  ) { }
+  ) {}
 
   async signUp(dto: SignUpDto): Promise<TokenResponse> {
     const exists = await this.usersService.findByEmail(dto.email);

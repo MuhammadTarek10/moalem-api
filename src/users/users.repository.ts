@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { BaseRepository } from 'src/core/database/base.repository';
 import { AuthMethod } from '../auth/schemas/auth-methods.schema';
+import { BaseRepository } from '../core/database/base.repository';
 import { User } from './schemas/user.schema';
 
 @Injectable()

@@ -2,9 +2,9 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Environment } from 'src/core/config/environment';
-import { RefreshTokenPayload } from 'src/core/utils/token/types';
-import { UsersService } from 'src/users/users.service';
+import { Environment } from '../../core/config/environment';
+import { RefreshTokenPayload } from '../../core/utils/token/types';
+import { UsersService } from '../../users/users.service';
 
 const extractJwtFromCookie = (req: unknown): string | null => {
   const request = req as Request & { cookies?: Record<string, string> };

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
-import { CommonSchema } from 'src/core/database/common.schema';
+import { CommonSchema } from '../../core/database/common.schema';
 
 @Schema({
   collection: 'sessions',

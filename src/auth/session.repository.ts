@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Session } from 'src/auth/schemas/session.schema';
-import { BaseRepository } from 'src/core/database/base.repository';
+import { BaseRepository } from '../core/database/base.repository';
+import { Session } from './schemas/session.schema';
 
 @Injectable()
 export class SessionRepository extends BaseRepository<Session> {

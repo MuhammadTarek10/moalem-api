@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Environment } from 'src/core/config/environment';
+import { Environment } from '../../config/environment';
 import { RefreshTokenPayload, TokenPayload, TokenResponse } from './types';
 
 @Injectable()
