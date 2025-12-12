@@ -45,8 +45,5 @@ export class SignUpDto {
     example: '+201234567890',
   })
   @IsString()
-  @Matches(/^\+?[1-9]\d{1,14}$/, {
-    message: 'WhatsApp number must be a valid phone number',
-  })
   whatsapp_number: string;
 }
