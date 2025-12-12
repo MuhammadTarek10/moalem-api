@@ -4,7 +4,6 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import basicAuth from 'express-basic-auth';
-import 'tsconfig-paths/register';
 import { AppModule } from './app.module';
 import { Environment } from './core/config/environment';
 
@@ -12,7 +11,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
 
   const config = app.get(ConfigService);
-  const port = config.getOrThrow<number>(Environment.PORT);
+  const port = config.get<number>(Environment.PORT) ?? 3000;
 
   app.use(cookieParser());
 
