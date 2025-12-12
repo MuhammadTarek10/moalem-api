@@ -23,7 +23,7 @@ export class User extends CommonSchema {
   governorate: string;
 
   @Prop({ required: false })
-  education_adminstration: string;
+  education_administration: string;
 
   @Prop({ required: false })
   subjects: string[];
