@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import basicAuth from 'express-basic-auth';
+import 'tsconfig-paths/register';
 import { AppModule } from './app.module';
 import { Environment } from './core/config/environment';
 
