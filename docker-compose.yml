@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  auth-mongo:
+    container_name: moalem-mongo
+    image: mongo:latest
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USER:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD:-password}
+      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE:-moalem-db}
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
