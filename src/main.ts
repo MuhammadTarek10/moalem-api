@@ -3,7 +3,6 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
-import basicAuth from 'express-basic-auth';
 import { AppModule } from './app.module';
 import { Environment } from './core/config/environment';
 
@@ -66,17 +65,6 @@ async function bootstrap() {
     })
     .build();
   const document = SwaggerModule.createDocument(app, docConfig);
-
-  app.use(
-    ['/docs', '/docs-json'],
-    basicAuth({
-      challenge: true,
-      users: {
-        [config.getOrThrow<string>(Environment.SWAGGER_USER) || 'admin']:
-          config.getOrThrow<string>(Environment.SWAGGER_PASSWORD) || 'admin',
-      },
-    }),
-  );
 
   SwaggerModule.setup('docs', app, document);
 
