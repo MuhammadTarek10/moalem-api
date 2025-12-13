@@ -1,6 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsString, Length, Matches } from 'class-validator';
+import {
+  IsArray,
+  IsEmail,
+  IsOptional,
+  IsString,
+  Length,
+  Matches,
+} from 'class-validator';
 
 export class SignUpDto {
   @ApiProperty({
@@ -46,4 +53,52 @@ export class SignUpDto {
   })
   @IsString()
   whatsapp_number: string;
+
+  @ApiProperty({
+    description: 'The governorate of the user',
+    required: false,
+    example: 'Cairo',
+  })
+  @IsOptional()
+  @IsString()
+  governorate?: string;
+
+  @ApiProperty({
+    description: 'The education administration of the user',
+    required: false,
+    example: 'Nasr City',
+  })
+  @IsOptional()
+  @IsString()
+  education_administration?: string;
+
+  @ApiProperty({
+    description: 'The subjects the user is interested in',
+    required: false,
+    example: ['Math', 'Science'],
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  subjects?: string[];
+
+  @ApiProperty({
+    description: 'The schools associated with the user',
+    required: false,
+    example: ['School A', 'School B'],
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  schools?: string[];
+
+  @ApiProperty({
+    description: 'The grades the user teaches or is in',
+    required: false,
+    example: ['Grade 10', 'Grade 11'],
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  grades?: string[];
 }
