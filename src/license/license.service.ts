@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Environment } from '../core/config/environment';
+import { TokenService } from '../core/utils/token/token.service';
 import { LicensePayload } from '../core/utils/token/types';
 import { User } from '../users/schemas/user.schema';
 import { UsersService } from '../users/users.service';
-import { TokenService } from '../core/utils/token/token.service';
 import { CouponRepository } from './coupon.repository';
 import { CreateCouponDto } from './dtos/create-coupon.dto';
 
@@ -85,7 +85,7 @@ export class LicenseService {
         expiresAt: newExpiryDate.toISOString(),
       };
 
-      const token = this.signLicense(payload);
+      const token = await this.signLicense(payload);
 
       return {
         license: token,
