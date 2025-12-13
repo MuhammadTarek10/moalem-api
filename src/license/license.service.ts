@@ -56,8 +56,8 @@ export class LicenseService {
       const now = new Date();
       let newExpiryDate: Date;
 
-      if (user.licenseExpiresAt && user.licenseExpiresAt > now) {
-        newExpiryDate = new Date(user.licenseExpiresAt.getTime() + durationMs);
+      if (user.license_expires_at && user.license_expires_at > now) {
+        newExpiryDate = new Date(user.license_expires_at.getTime() + durationMs);
       } else {
         newExpiryDate = new Date(now.getTime() + durationMs);
       }
@@ -74,7 +74,7 @@ export class LicenseService {
 
       await this.userService.update(
         user._id.toString(),
-        { licenseExpiresAt: newExpiryDate },
+        { license_expires_at: newExpiryDate },
         session,
       );
 

@@ -44,7 +44,7 @@ export class User extends CommonSchema {
   grades?: string[];
 
   @Prop({ type: Date, required: false })
-  licenseExpiresAt?: Date;
+  license_expires_at?: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
