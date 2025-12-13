@@ -1,6 +1,6 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { ClientSession, Model, Types } from 'mongoose';
-import { BaseRepository } from 'src/core/database/base.repository';
+import { BaseRepository } from '../core/database/base.repository';
 import { Coupon } from './schemas/coupon.schema';
 
 export class CouponRepository extends BaseRepository<Coupon> {

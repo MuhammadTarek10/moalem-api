@@ -15,14 +15,14 @@ import {
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { JwtGuard } from 'src/auth/guards/jwt.guard';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { ResponseDto } from 'src/core/common/dtos/response.dto';
-import { GetUser } from 'src/core/decorators/get-user.decorator';
-import { ResponseMessage } from 'src/core/decorators/response-message.decorator';
-import { Roles } from 'src/core/decorators/roles.decorator';
-import { UserRoles } from 'src/users/schemas/user-roles.enum';
-import { User } from 'src/users/schemas/user.schema';
+import { JwtGuard } from '../auth/guards/jwt.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { ResponseDto } from '../core/common/dtos/response.dto';
+import { GetUser } from '../core/decorators/get-user.decorator';
+import { ResponseMessage } from '../core/decorators/response-message.decorator';
+import { Roles } from '../core/decorators/roles.decorator';
+import { UserRoles } from '../users/schemas/user-roles.enum';
+import { User } from '../users/schemas/user.schema';
 import { CreateCouponDto } from './dtos/create-coupon.dto';
 import { RedeemCouponDto } from './dtos/redeem-coupon.dto';
 import {

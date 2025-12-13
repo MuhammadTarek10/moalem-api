@@ -4,10 +4,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Environment } from 'src/core/config/environment';
-import { LicensePayload } from 'src/core/utils/token/types';
-import { User } from 'src/users/schemas/user.schema';
-import { UsersService } from 'src/users/users.service';
+import { Environment } from '../core/config/environment';
+import { LicensePayload } from '../core/utils/token/types';
+import { User } from '../users/schemas/user.schema';
+import { UsersService } from '../users/users.service';
 import { TokenService } from '../core/utils/token/token.service';
 import { CouponRepository } from './coupon.repository';
 import { CreateCouponDto } from './dtos/create-coupon.dto';
