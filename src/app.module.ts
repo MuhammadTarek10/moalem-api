@@ -7,10 +7,18 @@ import { DatabaseModule } from './core/database/database.module';
 import { HttpExceptionFilter } from './core/filters/http-exception.filter';
 import { ResponseInterceptor } from './core/interceptors/response.interceptor';
 import { UtilsModule } from './core/utils/utils.module';
+import { LicenseModule } from './license/license.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [DatabaseModule, ConfigModule, AuthModule, UsersModule, UtilsModule],
+  imports: [
+    DatabaseModule,
+    ConfigModule,
+    AuthModule,
+    UsersModule,
+    UtilsModule,
+    LicenseModule,
+  ],
   providers: [
     AppService,
     {
@@ -24,4 +32,4 @@ import { UsersModule } from './users/users.module';
     Reflector,
   ],
 })
-export class AppModule { }
+export class AppModule {}

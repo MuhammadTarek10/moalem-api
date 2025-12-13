@@ -1,8 +1,15 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import * as crypto from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 import { Environment } from '../../config/environment';
-import { RefreshTokenPayload, TokenPayload, TokenResponse } from './types';
+import {
+  LicensePayload,
+  RefreshTokenPayload,
+  TokenPayload,
+  TokenResponse,
+} from './types';
 
 @Injectable()
 export class TokenService {
@@ -101,7 +108,27 @@ export class TokenService {
     }
   }
 
+  async generateLicenseToken(
+    payload: LicensePayload,
+    privateKey: string,
+  ): Promise<string> {
+    return this.jwtService.signAsync(
+      {
+        ...payload,
+        jti: this.generateJti(),
+      },
+      {
+        secret: privateKey,
+        algorithm: 'RS256',
+      },
+    );
+  }
+
   generateJti(): string {
-    return `${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+    return uuidv4();
+  }
+
+  generateCode(length: number = 15): string {
+    return crypto.randomBytes(length).toString('hex');
   }
 }

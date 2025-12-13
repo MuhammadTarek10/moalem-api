@@ -2,13 +2,13 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
 export class AuthMethod {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   provider: string;
 
-  @Prop({ required: false })
+  @Prop({ type: String, required: false })
   passwordHash?: string;
 
-  @Prop({ required: false })
+  @Prop({ type: String, required: false })
   providerId?: string;
 }
 

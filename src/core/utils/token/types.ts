@@ -6,6 +6,11 @@ export interface TokenPayload {
   sessionId?: string;
 }
 
+export interface LicensePayload {
+  id: string;
+  expiresAt: string;
+}
+
 export interface RefreshTokenPayload extends TokenPayload {
   sessionId: string;
   refreshToken: string;

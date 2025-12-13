@@ -11,9 +11,10 @@ import { ResponseDto, ResponseStatus } from '../common/dtos/response.dto';
 import { RESPONSE_MESSAGE_KEY } from '../decorators/response-message.decorator';
 
 @Injectable()
-export class ResponseInterceptor<T>
-  implements NestInterceptor<T, ResponseDto<T>>
-{
+export class ResponseInterceptor<T> implements NestInterceptor<
+  T,
+  ResponseDto<T>
+> {
   constructor(private reflector: Reflector) {}
 
   intercept(
@@ -24,13 +25,10 @@ export class ResponseInterceptor<T>
       this.reflector.get<string>(RESPONSE_MESSAGE_KEY, context.getHandler()) ||
       'Operation successful';
 
-    return next.handle().pipe(
-      map((data) => {
-        if (data instanceof ResponseDto) {
-          return data;
-        }
-        return new ResponseDto(data, message, ResponseStatus.SUCCESS);
-      }),
-    ) as Observable<ResponseDto<T>>;
+    return next
+      .handle()
+      .pipe(
+        map((data) => new ResponseDto(data, message, ResponseStatus.SUCCESS)),
+      ) as Observable<ResponseDto<T>>;
   }
 }
