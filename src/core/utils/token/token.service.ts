@@ -2,7 +2,6 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as crypto from 'crypto';
-import { v4 as uuidv4 } from 'uuid';
 import { Environment } from '../../config/environment';
 import {
   LicensePayload,
@@ -125,7 +124,7 @@ export class TokenService {
   }
 
   generateJti(): string {
-    return uuidv4();
+    return crypto.randomUUID();
   }
 
   generateCode(length: number = 15): string {
