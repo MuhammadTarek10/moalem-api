@@ -12,6 +12,8 @@ import { UsersService } from '../users/users.service';
 import { CouponRepository } from './coupon.repository';
 import { CreateCouponDto } from './dtos/create-coupon.dto';
 
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
 @Injectable()
 export class LicenseService {
   constructor(
@@ -22,17 +24,32 @@ export class LicenseService {
   ) {}
 
   async createCoupon(dto: CreateCouponDto, user: User) {
-    const code = this.tokenService.generateCode();
     const expiresAt = new Date(Date.now() + dto.duration * 24 * 60 * 60 * 1000);
 
-    const coupon = await this.couponRepository.create({
+    const firstCode = this.tokenService.generateCode();
+    const firstCoupon = await this.couponRepository.create({
       ...dto,
-      code,
+      code: firstCode,
+      duration: 0,
+      isFirstCode: true,
       issuedBy: user._id,
       expiresAt,
     });
 
-    return coupon;
+    const secondCode = this.tokenService.generateCode();
+    const secondCoupon = await this.couponRepository.create({
+      ...dto,
+      code: secondCode,
+      isFirstCode: false,
+      firstCouponId: firstCoupon._id,
+      issuedBy: user._id,
+      expiresAt,
+    });
+
+    return {
+      firstCoupon,
+      secondCoupon,
+    };
   }
 
   async redeemCoupon(code: string, user: User) {
@@ -50,14 +67,54 @@ export class LicenseService {
         throw new BadRequestException('Coupon expired');
       }
 
-      const ONE_DAY_MS = 24 * 60 * 60 * 1000;
-      const durationMs = coupon.duration * ONE_DAY_MS;
-
       const now = new Date();
+
+      if (coupon.isFirstCode) {
+        await this.couponRepository.update(
+          coupon._id.toString(),
+          {
+            isRedeemed: true,
+            redeemedBy: user._id,
+            redeemedAt: now,
+          },
+          session,
+        );
+
+        await session.commitTransaction();
+        return { message: 'First code accepted' };
+      }
+
+      if (coupon.firstCouponId) {
+        const firstCoupon = await this.couponRepository.findOne(
+          { _id: coupon.firstCouponId },
+          undefined,
+          session,
+        );
+
+        if (!firstCoupon) {
+          throw new BadRequestException(
+            'Invalid coupon chain: First coupon not found',
+          );
+        }
+
+        if (!firstCoupon.isRedeemed) {
+          throw new BadRequestException('First coupon must be redeemed first');
+        }
+
+        if (firstCoupon.redeemedBy.toString() !== user._id.toString()) {
+          throw new BadRequestException(
+            'First coupon was redeemed by another user',
+          );
+        }
+      }
+
+      const durationMs = coupon.duration * ONE_DAY_MS;
       let newExpiryDate: Date;
 
       if (user.license_expires_at && user.license_expires_at > now) {
-        newExpiryDate = new Date(user.license_expires_at.getTime() + durationMs);
+        newExpiryDate = new Date(
+          user.license_expires_at.getTime() + durationMs,
+        );
       } else {
         newExpiryDate = new Date(now.getTime() + durationMs);
       }

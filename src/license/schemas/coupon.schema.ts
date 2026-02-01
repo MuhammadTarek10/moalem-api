@@ -19,6 +19,12 @@ export class Coupon extends CommonSchema {
   @Prop({ type: Types.ObjectId, required: false })
   redeemedBy: Types.ObjectId;
 
+  @Prop({ type: Boolean, required: true, default: false })
+  isFirstCode: boolean;
+
+  @Prop({ type: Types.ObjectId, required: false })
+  firstCouponId: Types.ObjectId;
+
   @Prop({ type: Date, required: false })
   redeemedAt: Date;
 
