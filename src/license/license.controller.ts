@@ -27,12 +27,18 @@ import { CreateCouponDto } from './dtos/create-coupon.dto';
 import { RedeemCouponDto } from './dtos/redeem-coupon.dto';
 import {
   CouponResponseDto,
+  CreateCouponResponseDto,
   RedeemCouponResponseDto,
 } from './dtos/responses.dto';
 import { LicenseService } from './license.service';
 
 @ApiTags('License')
-@ApiExtraModels(ResponseDto, CouponResponseDto, RedeemCouponResponseDto)
+@ApiExtraModels(
+  ResponseDto,
+  CouponResponseDto,
+  CreateCouponResponseDto,
+  RedeemCouponResponseDto,
+)
 @Controller('license')
 export class LicenseController {
   constructor(private readonly licenseService: LicenseService) {}
@@ -45,7 +51,7 @@ export class LicenseController {
         { $ref: getSchemaPath(ResponseDto) },
         {
           properties: {
-            data: { $ref: getSchemaPath(CouponResponseDto) },
+            data: { $ref: getSchemaPath(CreateCouponResponseDto) },
           },
         },
       ],
