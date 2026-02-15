@@ -224,12 +224,15 @@ export class LicenseService {
       expiredLicenses,
     ] = await Promise.all([
       this.couponRepository.count({}),
-      this.couponRepository.count({ isRedeemed: true }),
-      this.couponRepository.count({ isRevoked: true }),
+      this.couponRepository.count({
+        isRedeemed: false,
+        $or: [{ isRevoked: false }, { isRevoked: { $exists: false } }],
+      }),
       this.couponRepository.count({
         $or: [{ isRedeemed: true }, { isRevoked: true }],
       }),
       this.couponRepository.count({ isRedeemed: true }),
+      this.couponRepository.count({ isRevoked: true }),
       this.couponRepository.count({
         isRedeemed: false,
         $or: [{ isRevoked: false }, { isRevoked: { $exists: false } }],
