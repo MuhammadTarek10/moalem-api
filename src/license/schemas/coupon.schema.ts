@@ -28,8 +28,8 @@ export class Coupon extends CommonSchema {
   @Prop({ type: Date, required: false })
   redeemedAt: Date;
 
-  @Prop({ type: Date, required: true })
-  expiresAt: Date;
+  @Prop({ type: Date, required: false })
+  expiresAt?: Date;
 }
 
 export const CouponSchema = SchemaFactory.createForClass(Coupon);

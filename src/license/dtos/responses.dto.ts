@@ -32,10 +32,12 @@ export class CouponResponseDto {
   isRedeemed: boolean;
 
   @ApiProperty({
-    description: 'The expiration date of the coupon',
+    description:
+      'The expiration date of the license granted by this coupon (set on redeem)',
     example: '2024-12-31T23:59:59.999Z',
+    required: false,
   })
-  expiresAt: Date;
+  expiresAt?: Date;
 
   @ApiProperty({
     description: 'The creation date of the coupon',

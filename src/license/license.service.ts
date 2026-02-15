@@ -24,8 +24,6 @@ export class LicenseService {
   ) {}
 
   async createCoupon(dto: CreateCouponDto, user: User) {
-    const expiresAt = new Date(Date.now() + dto.duration * 24 * 60 * 60 * 1000);
-
     const firstCode = this.tokenService.generateCode();
     const firstCoupon = await this.couponRepository.create({
       ...dto,
@@ -33,7 +31,6 @@ export class LicenseService {
       duration: 0,
       isFirstCode: true,
       issuedBy: user._id,
-      expiresAt,
     });
 
     const secondCode = this.tokenService.generateCode();
@@ -43,7 +40,6 @@ export class LicenseService {
       isFirstCode: false,
       firstCouponId: firstCoupon._id,
       issuedBy: user._id,
-      expiresAt,
     });
 
     return {
@@ -62,10 +58,6 @@ export class LicenseService {
       if (!coupon) throw new NotFoundException('Coupon not found');
       if (coupon.isRedeemed)
         throw new BadRequestException('Coupon already redeemed');
-
-      if (coupon.expiresAt && coupon.expiresAt < new Date()) {
-        throw new BadRequestException('Coupon expired');
-      }
 
       const now = new Date();
 
@@ -125,6 +117,7 @@ export class LicenseService {
           isRedeemed: true,
           redeemedBy: user._id,
           redeemedAt: now,
+          expiresAt: newExpiryDate,
         },
         session,
       );

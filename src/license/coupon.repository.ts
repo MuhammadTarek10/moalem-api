@@ -20,14 +20,12 @@ export class CouponRepository extends BaseRepository<Coupon> {
     return session
       ? await this.find(
           {
-            expiresAt: { $gt: new Date() },
             isRedeemed: false,
           },
           undefined,
           session,
         )
       : await this.find({
-          expiresAt: { $gt: new Date() },
           isRedeemed: false,
         });
   }
