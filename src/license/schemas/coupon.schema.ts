@@ -30,6 +30,24 @@ export class Coupon extends CommonSchema {
 
   @Prop({ type: Date, required: false })
   expiresAt?: Date;
+
+  @Prop({ type: Boolean, default: false })
+  isRevoked: boolean;
+
+  @Prop({ type: Types.ObjectId, required: false })
+  revokedBy?: Types.ObjectId;
+
+  @Prop({ type: Date, required: false })
+  revokedAt?: Date;
+
+  @Prop({ type: String, required: false })
+  revokeReason?: string;
+
+  @Prop({ type: Types.ObjectId, required: false })
+  reissuedFromCouponId?: Types.ObjectId;
+
+  @Prop({ type: Types.ObjectId, required: false })
+  reissuedToCouponId?: Types.ObjectId;
 }
 
 export const CouponSchema = SchemaFactory.createForClass(Coupon);
