@@ -18,6 +18,7 @@ import {
   ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
+  ApiProduces,
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
@@ -193,6 +194,18 @@ export class LicenseController {
   }
 
   @ApiOperation({ summary: 'Export coupons list as CSV' })
+  @ApiProduces('text/csv')
+  @ApiOkResponse({
+    description: 'Coupons CSV exported successfully',
+    content: {
+      'text/csv': {
+        schema: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @ApiBearerAuth()
   @Roles(UserRoles.ADMIN)
   @UseGuards(JwtGuard, RolesGuard)
@@ -211,6 +224,18 @@ export class LicenseController {
   }
 
   @ApiOperation({ summary: 'Export coupon stats as CSV' })
+  @ApiProduces('text/csv')
+  @ApiOkResponse({
+    description: 'Coupon stats CSV exported successfully',
+    content: {
+      'text/csv': {
+        schema: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @ApiBearerAuth()
   @Roles(UserRoles.ADMIN)
   @UseGuards(JwtGuard, RolesGuard)
