@@ -9,10 +9,23 @@ import { TokenService } from '../core/utils/token/token.service';
 import { LicensePayload } from '../core/utils/token/types';
 import { User } from '../users/schemas/user.schema';
 import { UsersService } from '../users/users.service';
-import { CouponRepository } from './coupon.repository';
+import { CouponAdminListItem, CouponRepository } from './coupon.repository';
 import { CreateCouponDto } from './dtos/create-coupon.dto';
+import {
+  CouponAdminStatus,
+  ListAdminCouponsDto,
+} from './dtos/list-admin-coupons.dto';
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
+export interface CouponsStats {
+  totalCoupons: number;
+  validCoupons: number;
+  invalidCoupons: number;
+  redeemedCoupons: number;
+  activeLicenses: number;
+  expiredLicenses: number;
+}
 
 @Injectable()
 export class LicenseService {
@@ -147,6 +160,63 @@ export class LicenseService {
     } finally {
       await this.couponRepository.endSession(session);
     }
+  }
+
+  async listCouponsForAdmin(
+    query: ListAdminCouponsDto,
+  ): Promise<CouponAdminListItem[]> {
+    if (query.status === CouponAdminStatus.VALID) {
+      return this.couponRepository.findCouponsWithUserInfo({
+        isRedeemed: false,
+      });
+    }
+
+    if (query.status === CouponAdminStatus.INVALID) {
+      return this.couponRepository.findCouponsWithUserInfo({
+        isRedeemed: true,
+      });
+    }
+
+    return this.couponRepository.findCouponsWithUserInfo();
+  }
+
+  async listRedeemedCouponsForAdmin(): Promise<CouponAdminListItem[]> {
+    return this.couponRepository.findCouponsWithUserInfo({ isRedeemed: true });
+  }
+
+  async getCouponsStatsForAdmin(): Promise<CouponsStats> {
+    const now = new Date();
+
+    const [
+      totalCoupons,
+      validCoupons,
+      invalidCoupons,
+      redeemedCoupons,
+      activeLicenses,
+      expiredLicenses,
+    ] = await Promise.all([
+      this.couponRepository.count({}),
+      this.couponRepository.count({ isRedeemed: false }),
+      this.couponRepository.count({ isRedeemed: true }),
+      this.couponRepository.count({ isRedeemed: true }),
+      this.couponRepository.count({
+        isRedeemed: true,
+        expiresAt: { $gt: now },
+      }),
+      this.couponRepository.count({
+        isRedeemed: true,
+        expiresAt: { $lte: now },
+      }),
+    ]);
+
+    return {
+      totalCoupons,
+      validCoupons,
+      invalidCoupons,
+      redeemedCoupons,
+      activeLicenses,
+      expiredLicenses,
+    };
   }
 
   private getPrivateKey() {
