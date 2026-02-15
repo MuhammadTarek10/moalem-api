@@ -77,6 +77,14 @@ export class AuthService {
 
   async signIn(user: User): Promise<TokenResponse> {
     const userId = user._id.toString();
+    const activeSessions =
+      await this.sessionRepository.findValidSessionsByUserId(userId);
+
+    if (activeSessions.length > 0) {
+      throw new ConflictException(
+        'User is already signed in on another device. Please sign out first.',
+      );
+    }
 
     const session = await this.sessionRepository.create({
       userId: user._id,
